@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUsersTable extends Migration
+class CreateActivityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,17 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('activity', function (Blueprint $table) {
             $table->id();
-            $table->string('fullname');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('session')->nullable();
-            $table->string('mobilenumber');
-            $table->integer('accesslevel');
-            $table->integer('is_member');
+            $table->integer('transaction_number');
+            $table->integer('customer_id');
+            $table->integer('customer_type_id');
+            $table->integer('machine_id');
+            $table->integer('service_list')->nullable();
+            $table->integer('item_list')->nullable();
+            $table->integer('discount_id')->nullable();
+            $table->float('sub_total', 8, 2);
+            $table->float('total', 8, 2);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
@@ -34,6 +36,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('activity');
     }
 }

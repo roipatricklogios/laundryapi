@@ -19,7 +19,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required',
             'mobilenumber' => 'required|string',
-            'accesslevel' => 'required|integer'
+            'accesslevel' => 'required|integer',
+            'is_member' => 'required|integer'
         ]);
 
         try {
@@ -31,6 +32,7 @@ class UserController extends Controller
             $user->password = app('hash')->make($plainPassword);
             $user->mobilenumber = $request->input('mobilenumber');
             $user->accesslevel = $request->input('accesslevel');
+            $user->is_member = $request->input('is_member');
 
             $user->save();
 
@@ -44,25 +46,13 @@ class UserController extends Controller
 
     }
 
-
-    public function checkEmail($email){
-
-
-
-    }
-
-    public function checkMobilenum($mobilenum){
-
-
-
-    }
-
     public function logAuth(Request $request){
 
         /*Access Level
             1 - superadmin
             2 - admin
             3 - cashier
+            4 - customer
         */
         //Comment Added September 29
 
@@ -77,10 +67,11 @@ class UserController extends Controller
 
               if (Hash::check($password, $login->password)) {
 
-                  $res['success'] = true;
-                  $res['accesslevel'] = $login->accesslevel;
-                  $res['fullname'] = $login->fullname;
-                  return response(json_encode($res), 200);
+                $res['success'] = true;
+                $res['accesslevel'] = $login->accesslevel;
+                $res['fullname'] = $login->fullname;
+
+                return response(json_encode($res), 200);
 
               }else{
 
@@ -107,4 +98,43 @@ class UserController extends Controller
         }
 
     }
+
+
+    public function checkEmail($email){
+
+
+
+    }
+
+    public function checkMobilenum($mobilenum){
+
+
+
+    }
+
+    public function addCustomer( Request $request ){
+
+
+
+    }
+
+    public function updateCustomer(){
+
+
+
+    }
+
+    /*Soft Delete Only*/
+    public function deleteCustomer(){
+
+        
+        
+    }
+
+    public function recoverCustomer(){
+
+        
+        
+    }
+    
 }
